@@ -1,0 +1,80 @@
+{
+    "comfyui": {
+        "server_url": "http://127.0.0.1:8188",
+        "input_dir": "/ABS/PATH/TO/ComfyUI/input",
+        "output_dir": "/ABS/PATH/TO/ComfyUI/output"
+    },
+    "workflows": {
+        "inpaint_focused": {
+            "path": "/ABS/PATH/TO/workflows/GIMP-InPainting-v2-API.json",
+            "overrides": {
+                "promptText": { "node_id": "", "field": "" },
+                "inputImageFilename": { "node_id": "225", "field": "image" },
+                "inputMaskFilename": { "node_id": "", "field": "" },
+                "saveFilenamePrefix": { "node_id": "163", "field": "filename_prefix" },
+                "seed": { "node_id": "", "field": "" }
+            }
+        },
+        "imageedit_1": {
+            "path": "/ABS/PATH/TO/workflows/GIMP-ImageEdit-V1-API.json",
+            "overrides": {
+                "promptTextPositive": { "node_id": "111", "field": "prompt" },
+                "promptTextNegative": { "node_id": "110", "field": "prompt" },
+                "img1Filename": { "node_id": "78", "field": "image" },
+                "saveFilenamePrefix": { "node_id": "60", "field": "filename_prefix" }
+            }
+        },
+        "imageedit_2": {
+            "path": "/ABS/PATH/TO/workflows/GIMP-ImageEdit-V2-API.json",
+            "overrides": {
+                "promptTextPositive": { "node_id": "111", "field": "prompt" },
+                "promptTextNegative": { "node_id": "110", "field": "prompt" },
+                "img1Filename": { "node_id": "78", "field": "image" },
+                "img2Filename": { "node_id": "106", "field": "image" },
+                "saveFilenamePrefix": { "node_id": "60", "field": "filename_prefix" }
+            }
+        },
+        "imageedit_3": {
+            "path": "/ABS/PATH/TO/workflows/GIMP-ImageEdit-V3-API.json",
+            "overrides": {
+                "promptTextPositive": { "node_id": "111", "field": "prompt" },
+                "promptTextNegative": { "node_id": "110", "field": "prompt" },
+                "img1Filename": { "node_id": "78", "field": "image" },
+                "img2Filename": { "node_id": "106", "field": "image" },
+                "img3Filename": { "node_id": "108", "field": "image" },
+                "saveFilenamePrefix": { "node_id": "60", "field": "filename_prefix" }
+            }
+        },
+        "generator": {
+            "path": "/ABS/PATH/TO/workflows/GIMP-ImageGeneration-v1-API.json",
+            "overrides": {
+                "promptText": { "node_id": "75:6", "field": "text" },
+                "saveFilenamePrefix": { "node_id": "60", "field": "filename_prefix" },
+                "seed": { "node_id": "75:3", "field": "seed" },
+                "width": { "node_id": "75:58", "field": "width" },
+                "height": { "node_id": "75:58", "field": "height" }
+            }
+        },
+        "outpaint": {
+            "path": "/ABS/PATH/TO/workflows/GIMP-OutPainting-V1-API.json",
+            "overrides": {
+                "promptText": { "node_id": "", "field": "" },
+                "img1Filename": { "node_id": "193", "field": "image" },
+                "pad": { "node_id": "", "field": "" },
+                "saveFilenamePrefix": { "node_id": "192", "field": "filename_prefix" }
+            }
+        },
+        "upscaler_4x": {
+            "path": "/ABS/PATH/TO/workflows/GIMP-Upscaler-RealESRGAN-x4-API.json",
+            "overrides": {
+                "inputImageFilename": { "node_id": "32", "field": "image" },
+                "saveFilenamePrefix": { "node_id": "9", "field": "filename_prefix" }
+            }
+        }
+    },
+    "settings": {
+        "image_quality": 0.85,
+        "max_image_size": 1024,
+        "timeout": 30
+    }
+}

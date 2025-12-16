@@ -1,0 +1,411 @@
+{
+  "174": {
+    "inputs": {
+      "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "175": {
+    "inputs": {
+      "unet_name": "qwen_image_fp8_e4m3fn.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "176": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "174",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Negative Prompt)"
+    }
+  },
+  "177": {
+    "inputs": {
+      "control_net_name": "Qwen-Image-InstantX-ControlNet-Inpainting.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "178": {
+    "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "180": {
+    "inputs": {
+      "shift": 3.1000000000000005,
+      "model": [
+        "185",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingAuraFlow",
+    "_meta": {
+      "title": "ModelSamplingAuraFlow"
+    }
+  },
+  "181": {
+    "inputs": {
+      "strength": 1,
+      "start_percent": 0,
+      "end_percent": 1,
+      "positive": [
+        "182",
+        0
+      ],
+      "negative": [
+        "176",
+        0
+      ],
+      "control_net": [
+        "177",
+        0
+      ],
+      "vae": [
+        "178",
+        0
+      ],
+      "image": [
+        "219:194",
+        0
+      ],
+      "mask": [
+        "220:253",
+        0
+      ]
+    },
+    "class_type": "ControlNetInpaintingAliMamaApply",
+    "_meta": {
+      "title": "ControlNetInpaintingAliMamaApply"
+    }
+  },
+  "182": {
+    "inputs": {
+      "text": "The King, on a throne, surrounded by Knights, HD, Realistic, Octane Render, Unreal engine",
+      "clip": [
+        "174",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Positive Prompt)"
+    }
+  },
+  "185": {
+    "inputs": {
+      "lora_name": "Qwen/base model/Qwen-Image-Lightning-4steps-V1.0.safetensors",
+      "strength_model": 1,
+      "model": [
+        "175",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
+    }
+  },
+  "189": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "200",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "190": {
+    "inputs": {
+      "seed": 246241812142473,
+      "steps": 4,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "180",
+        0
+      ],
+      "positive": [
+        "181",
+        0
+      ],
+      "negative": [
+        "181",
+        1
+      ],
+      "latent_image": [
+        "195",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "191": {
+    "inputs": {
+      "samples": [
+        "190",
+        0
+      ],
+      "vae": [
+        "178",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "192": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "191",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "193": {
+    "inputs": {
+      "image": "f67964cbb0a742d0a4e204a1843e8136_image.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "195": {
+    "inputs": {
+      "pixels": [
+        "219:194",
+        0
+      ],
+      "vae": [
+        "178",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "200": {
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "resize_source": false,
+      "destination": [
+        "219:194",
+        0
+      ],
+      "source": [
+        "191",
+        0
+      ],
+      "mask": [
+        "220:253",
+        0
+      ]
+    },
+    "class_type": "ImageCompositeMasked",
+    "_meta": {
+      "title": "ImageCompositeMasked"
+    }
+  },
+  "202": {
+    "inputs": {
+      "left": 200,
+      "top": 200,
+      "right": 200,
+      "bottom": 200,
+      "feathering": 0,
+      "image": [
+        "193",
+        0
+      ]
+    },
+    "class_type": "ImagePadForOutpaint",
+    "_meta": {
+      "title": "Pad Image for Outpainting"
+    }
+  },
+  "203": {
+    "inputs": {
+      "images": [
+        "219:194",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "207": {
+    "inputs": {
+      "mask": [
+        "220:253",
+        0
+      ]
+    },
+    "class_type": "MaskPreview",
+    "_meta": {
+      "title": "MaskPreview"
+    }
+  },
+  "219:218": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "219:216",
+        0
+      ]
+    },
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
+    }
+  },
+  "219:216": {
+    "inputs": {
+      "upscale_method": "area",
+      "largest_size": [
+        "219:215",
+        0
+      ],
+      "image": [
+        "219:217",
+        0
+      ]
+    },
+    "class_type": "ImageScaleToMaxDimension",
+    "_meta": {
+      "title": "ImageScaleToMaxDimension"
+    }
+  },
+  "219:217": {
+    "inputs": {
+      "mask": [
+        "202",
+        1
+      ]
+    },
+    "class_type": "MaskToImage",
+    "_meta": {
+      "title": "Convert Mask to Image"
+    }
+  },
+  "219:194": {
+    "inputs": {
+      "upscale_method": "area",
+      "largest_size": [
+        "219:215",
+        0
+      ],
+      "image": [
+        "202",
+        0
+      ]
+    },
+    "class_type": "ImageScaleToMaxDimension",
+    "_meta": {
+      "title": "ImageScaleToMaxDimension"
+    }
+  },
+  "219:215": {
+    "inputs": {
+      "value": 1536
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Int"
+    }
+  },
+  "220:253": {
+    "inputs": {
+      "channel": "red",
+      "image": [
+        "220:252",
+        0
+      ]
+    },
+    "class_type": "ImageToMask",
+    "_meta": {
+      "title": "Convert Image to Mask"
+    }
+  },
+  "220:251": {
+    "inputs": {
+      "mask": [
+        "220:199",
+        0
+      ]
+    },
+    "class_type": "MaskToImage",
+    "_meta": {
+      "title": "Convert Mask to Image"
+    }
+  },
+  "220:199": {
+    "inputs": {
+      "expand": 20,
+      "tapered_corners": true,
+      "mask": [
+        "219:218",
+        0
+      ]
+    },
+    "class_type": "GrowMask",
+    "_meta": {
+      "title": "GrowMask"
+    }
+  },
+  "220:252": {
+    "inputs": {
+      "blur_radius": 31,
+      "sigma": 1,
+      "image": [
+        "220:251",
+        0
+      ]
+    },
+    "class_type": "ImageBlur",
+    "_meta": {
+      "title": "ImageBlur"
+    }
+  }
+}
